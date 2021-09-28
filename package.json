@@ -1,0 +1,29 @@
+{
+    "name": "tf2autobot-gui",
+    "version": "1.0.0",
+    "description": "A Web-based GUI editor for tf2 autobot's pricelists .",
+    "main": "dist/app.js",
+    "scripts": {
+        "release": "np --no-cleanup --no-publish",
+        "build": "tsc -p .",
+        "pretest": "npm run lint",
+        "test": "jest",
+        "prelint": "npm run eslint-check",
+        "lint": "eslint .",
+        "prettier": "prettier --check src/**/* && prettier --check *.json",
+        "eslint-check": "npx eslint-config-prettier src/app.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TF2Autobot/tf2autobot.git"
+    },
+    "author": "IdiNium/Nicklas Marc Pedersen",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "typescript": "^4.4.2"
+    },
+    "devDependencies": {
+        "@types/node": "^16.9.1"
+    }
+}

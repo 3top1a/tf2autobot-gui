@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ES2020",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "allowJs": false,
+        "checkJs": false,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "sourceMap": true,
+        "removeComments": true,
+        "strict": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false,
+        "typeRoots": ["./node_modules/@types"],
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+    },
+    "exclude": ["./node_modules", "**/__mocks__/*", "**/__tests__/*"],
+    "include": ["./src"]
+}

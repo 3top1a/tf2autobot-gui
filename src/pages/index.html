@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+    <title>Cock</title>
+</head>
+
+<body>
+    <script src="index.js"></script>
+    <div id="topbar">
+        <ul>
+            <li>
+                <div> Listings </div>
+            </li>
+            <li>
+                <div> Stats </div>
+            </li>
+        </ul>
+    </div>
+    <div id="topbar">
+        <ul>
+            <li>
+                <div> pricelist.json: </div>
+            </li>
+            <li>
+                <hr class="vh">
+            </li>
+            <li>
+                <input id="pricelist-upload" type="file" accept=".json" oninput="file_changed()">
+            </li>
+        </ul>
+    </div>
+    <div id="listings">
+        <li id="example-listing" class="listing" style="display: none;">
+            <h3 class="Title">Example Title</h3>
+            <h6 class="Sku">666 66</h6>
+            <p class="Desc">Hi!</p>
+            <p class="Group">Crap</p>
+            <b class="Buy">⬅️ 9ref</b>
+            <b class="Sell">➡️ 10ref</b>
+            <div class="Links">
+            </div>
+        </li>
+        <ul id="listings-list" style="padding: 0 0;">
+            <!-- LISTING DOWN 'ERE -->
+        </ul>
+    </div>
+</body>
+
+</html>
