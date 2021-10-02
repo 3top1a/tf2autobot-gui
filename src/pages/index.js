@@ -59,7 +59,12 @@ function applyJsonToPage(out) {
         var eq_json_item = items.indexOf(element)
         //For consistency, we set the listings html id as the item's SKU
         ex.id = items[eq_json_item].sku
-        ex.style = ""
+
+        if (items[eq_json_item].enabled == false)
+            ex.style = "background-color: red !important;"
+        else
+            ex.style = ""
+
         //For each of it's children, set their respective values
         for (let index = 0; index < ex.childNodes.length; index++) {
             //Get the child
@@ -74,23 +79,53 @@ function applyJsonToPage(out) {
                 case "Buy":
                     var price = ""
                     if (items[eq_json_item].buy.keys > 0)
-                        price = items[eq_json_item].buy.keys + " Keys "
+                        price = items[eq_json_item].buy.keys + " K "
                     if (items[eq_json_item].buy.metal > 0)
-                        price += items[eq_json_item].buy.metal + " Metal"
-                    child_of_element.innerText = price
+                        price += items[eq_json_item].buy.metal + " M"
+                    child_of_element.innerText = price + " ⬅️"
                     break;
                 case "Sell":
                     var price = ""
                     if (items[eq_json_item].sell.keys > 0)
-                        price = items[eq_json_item].sell.keys + " Keys "
+                        price = items[eq_json_item].sell.keys + " K "
                     if (items[eq_json_item].sell.metal > 0)
-                        price += items[eq_json_item].sell.metal + " Metal"
-                    child_of_element.innerText = price
+                        price += items[eq_json_item].sell.metal + " M"
+                    child_of_element.innerText = price + " ➡️"
                     break;
-                case "Links":
-                    //<img src="images/bptf_icon.webp" style="width: 24px; height: 24px;">
+                case "Buttons":
                     //Backpack.tf
                     // TODO Backpack.tf link
+                    //<img src="images/bptf_icon.webp" style="width: 24px; height: 24px;">
+
+                    //Trash
+                    //Delete the current item
+                    //Icons made by Freepik from www.flaticon.com
+
+                    //Stupid for loop because there's no `filter`
+                    trash_node = null
+                    child_of_element.childNodes.forEach(_node => {
+                        if (_node.className == "delete")
+                            trash_node = _node
+                    })
+                    if (trash_node == null) break;
+
+
+                    trash_node.addEventListener('click', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+
+                        //Get the entry in `items`
+                        var result = items.filter(obj => {
+                            return obj.sku == src.parentNode.parentNode.parentNode.id
+                        })[0]
+
+                        //Remove item
+                        items.splice(items.indexOf(result), 1);
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
+
                     break;
                 case "Group":
                     var html = "<input autocomplete=off type=\"text\" list=\"groups\">"
@@ -104,10 +139,10 @@ function applyJsonToPage(out) {
                         //Get the entry in `items`
                         var result = items.filter(obj => {
                             return obj.sku == src.parentNode.id
-                        })
+                        })[0]
 
                         //Change group
-                        result[0].group = src.value
+                        result.group = src.value
 
                         //Redraw
                         applyJsonToPage()

@@ -9,7 +9,7 @@
     <title>Cock</title>
 </head>
 
-<body>
+<body onload="file_changed()">
     <script src="index.js"></script>
     <div id="topbar">
         <ul>
@@ -36,13 +36,16 @@
     </div>
     <div id="listings">
         <li id="example-listing" class="listing" style="display: none;">
-            <h3 class="Title">Example Title</h3>
-            <h6 class="Sku">666 66</h6>
+            <h3 class="Title" title="Title">Example Title</h3>
+            <h6 class="Sku" title="Sku">666 66</h6>
             <p class="Desc">Hi!</p>
             <p class="Group">Crap</p>
-            <b class="Buy">⬅️ 9ref</b>
-            <b class="Sell">➡️ 10ref</b>
-            <div class="Links">
+            <b class="Buy" title="Buy">⬅️ 9ref</b>
+            <b class="Sell" title="Sell">➡️ 10ref</b>
+            <div class="Buttons">
+                <button class="delete" title="delete">
+                    <img src="public/trash-can.png">
+                </button>
             </div>
         </li>
         <ul id="listings-list" style="padding: 0 0;">
