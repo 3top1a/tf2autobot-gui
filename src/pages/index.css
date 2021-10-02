@@ -57,12 +57,14 @@ body {
 }
 
 #listings-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 33%);
+    display: flex;
     gap: 4px 4px;
+    flex-wrap: wrap;
 }
 
 .listing {
+    flex-shrink: 0;
+    flex-grow: 1;
     display: grid;
     grid-template-columns: 2fr 1fr 0.5fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -76,7 +78,8 @@ body {
     border-radius: 5px;
     grid-auto-flow: row;
     justify-content: start;
-    overflow: hidden;
+    min-height: 0px;
+    max-height: max-content;
 }
 
 .Title {
