@@ -18,13 +18,6 @@ function applyJsonToPage(out) {
     if (out != null) {
         listings_list = document.getElementById("listings-list")
         json = JSON.parse(out)
-        items = []
-
-        //Weird way to put all JSON items into an array
-        for (let index = 0; index < Object.entries(json).length; index++) {
-            const element = Object.entries(json)[index]
-            items.push(element[1])
-        }
     }
 
     //Delete previous nodes
@@ -32,10 +25,10 @@ function applyJsonToPage(out) {
 
     //Get all the different groups
     groups = []
-    items.forEach(element => {
-        var eq_json_item = items.indexOf(element)
-        if (!groups.includes(items[eq_json_item].group))
-            groups.push(items[eq_json_item].group)
+    Object.values(json).forEach(element => {
+        var eq_json_item = Object.values(json).indexOf(element)
+        if (!groups.includes(Object.values(json)[eq_json_item].group))
+            groups.push(Object.values(json)[eq_json_item].group)
     });
 
     //Make the datalist for the groups
@@ -46,21 +39,16 @@ function applyJsonToPage(out) {
 
     listings_list.innerHTML += _group_html
 
-    //Sort so the page stays same after refreshing
-    items = items.sort(function(a, b) {
-        return a.sku.replace(/\D/g, "") - b.sku.replace(/\D/g, "");
-    });
-
     //Make a listing for all items
-    items.forEach(element => {
+    Object.values(json).forEach(element => {
         //Clone the example element
         let ex = document.getElementById("example-listing").cloneNode(true)
         //Equivalent json item
-        var eq_json_item = items.indexOf(element)
+        var eq_json_item = Object.values(json).indexOf(element)
         //For consistency, we set the listings html id as the item's SKU
-        ex.id = items[eq_json_item].sku
+        ex.id = Object.values(json)[eq_json_item].sku
 
-        if (items[eq_json_item].enabled == false)
+        if (Object.values(json)[eq_json_item].enabled == false)
             ex.style = "background-color: red !important;"
         else
             ex.style = ""
@@ -71,26 +59,30 @@ function applyJsonToPage(out) {
             const child_of_element = ex.childNodes.item(index);
             switch (child_of_element.className) {
                 case "Title":
-                    child_of_element.innerText = items[eq_json_item].name
+                    child_of_element.innerText = Object.values(json)[eq_json_item].name
                     break;
                 case "Sku":
-                    child_of_element.innerText = items[eq_json_item].sku
+                    child_of_element.innerText = Object.values(json)[eq_json_item].sku
                     break;
                 case "Buy":
-                    var price = ""
-                    if (items[eq_json_item].buy.keys > 0)
-                        price = items[eq_json_item].buy.keys + " K "
-                    if (items[eq_json_item].buy.metal > 0)
-                        price += items[eq_json_item].buy.metal + " M"
-                    child_of_element.innerText = price + " ⬅️"
+                    child_of_element.querySelector(".keys").value = parseInt(Object.values(json)[eq_json_item].buy.keys)
+                    child_of_element.querySelector(".metal").value = parseFloat(Object.values(json)[eq_json_item].buy.metal).toFixed(2)
+
+                    // Snap the number of metal to the nearest of .05, .11 etc.
+                    /*child_of_element.querySelector(".metal").addEventListener('change', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+                        val = parseFloat(src.value).toFixed(2)
+
+                        if ((val % 0.11).toFixed(2) == 0.10) {
+                            // The number is x.y0 and y is > 1
+                            src.value = parseFloat(parseFloat(src.value) + 0.01)
+                        }
+                    });*/
                     break;
                 case "Sell":
-                    var price = ""
-                    if (items[eq_json_item].sell.keys > 0)
-                        price = items[eq_json_item].sell.keys + " K "
-                    if (items[eq_json_item].sell.metal > 0)
-                        price += items[eq_json_item].sell.metal + " M"
-                    child_of_element.innerText = price + " ➡️"
+                    child_of_element.querySelector(".keys").value = parseInt(Object.values(json)[eq_json_item].sell.keys)
+                    child_of_element.querySelector(".metal").value = parseFloat(Object.values(json)[eq_json_item].sell.metal).toFixed(2)
                     break;
                 case "Buttons":
                     //Backpack.tf
@@ -114,13 +106,8 @@ function applyJsonToPage(out) {
                         //Get the event's source
                         var src = event.target || event.srcElement;
 
-                        //Get the entry in `items`
-                        var result = items.filter(obj => {
-                            return obj.sku == src.parentNode.parentNode.parentNode.id
-                        })[0]
-
-                        //Remove item
-                        items.splice(items.indexOf(result), 1);
+                        //Get the entry in `json`
+                        delete json[src.parentNode.parentNode.parentNode.id]
 
                         //Redraw
                         applyJsonToPage()
@@ -130,14 +117,14 @@ function applyJsonToPage(out) {
                 case "Group":
                     var html = "<input autocomplete=off type=\"text\" list=\"groups\">"
                     child_of_element.innerHTML = html
-                    child_of_element.id = items[eq_json_item].sku
-                    child_of_element.childNodes[0].value = items[eq_json_item].group
+                    child_of_element.id = Object.values(json)[eq_json_item].sku
+                    child_of_element.childNodes[0].value = Object.values(json)[eq_json_item].group
                     child_of_element.addEventListener('change', (event) => {
                         //Get the event's source
                         var src = event.target || event.srcElement;
 
-                        //Get the entry in `items`
-                        var result = items.filter(obj => {
+                        //Get the entry in `json`
+                        var result = Object.values(json).filter(obj => {
                             return obj.sku == src.parentNode.id
                         })[0]
 
@@ -153,4 +140,22 @@ function applyJsonToPage(out) {
 
         document.getElementById("listings-list").appendChild(ex)
     });
+}
+
+function export_pricelist() {
+    _json = JSON.stringify(json);
+    var blob = new Blob([_json], {
+        type: "application/json"
+    });
+    var url = URL.createObjectURL(blob);
+
+
+    var link = document.createElement("a");
+    link.download = "pricelist.js";
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+    navigator.clipboard.writeText(_json);
 }

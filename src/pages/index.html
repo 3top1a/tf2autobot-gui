@@ -32,6 +32,11 @@
             <li>
                 <input id="pricelist-upload" type="file" accept=".json" oninput="file_changed()">
             </li>
+            <li>
+                <button id="save-pricelist" type="button" onclick="export_pricelist()">
+                    Save
+                </button>
+            </li>
         </ul>
     </div>
     <div id="listings">
@@ -40,8 +45,14 @@
             <h6 class="Sku" title="Sku">666 66</h6>
             <p class="Desc">Hi!</p>
             <p class="Group">Crap</p>
-            <b class="Buy" title="Buy">⬅️ 9ref</b>
-            <b class="Sell" title="Sell">➡️ 10ref</b>
+            <div class="Buy" title="Buy">
+                <input class="keys" type="number" step="1" min=0>
+                <input class="metal" type="number" step="0.05" min=0>
+            </div>
+            <div class="Sell" title="Sell">
+                <input class="keys" type="number" step="1" min=0>
+                <input class="metal" type="number" step="0.05" min=0>
+            </div>
             <div class="Buttons">
                 <button class="delete" title="delete">
                     <img src="public/trash-can.png">
