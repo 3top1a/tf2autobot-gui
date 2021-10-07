@@ -66,23 +66,73 @@ function applyJsonToPage(out) {
                     break;
                 case "Buy":
                     child_of_element.querySelector(".keys").value = parseInt(Object.values(json)[eq_json_item].buy.keys)
-                    child_of_element.querySelector(".metal").value = parseFloat(Object.values(json)[eq_json_item].buy.metal).toFixed(2)
-
-                    // Snap the number of metal to the nearest of .05, .11 etc.
-                    /*child_of_element.querySelector(".metal").addEventListener('change', (event) => {
+                    child_of_element.querySelector(".keys").addEventListener('change', (event) => {
                         //Get the event's source
                         var src = event.target || event.srcElement;
-                        val = parseFloat(src.value).toFixed(2)
 
-                        if ((val % 0.11).toFixed(2) == 0.10) {
-                            // The number is x.y0 and y is > 1
-                            src.value = parseFloat(parseFloat(src.value) + 0.01)
-                        }
-                    });*/
+                        //Get the entry in `json`
+                        var result = Object.values(json).filter(obj => {
+                            return obj.sku == src.parentNode.parentElement.id
+                        })[0]
+
+                        //Change price
+                        result.buy.keys = parseInt(src.value)
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
+
+                    child_of_element.querySelector(".metal").value = parseFloat(Object.values(json)[eq_json_item].buy.metal).toFixed(2)
+                    child_of_element.querySelector(".metal").addEventListener('change', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+
+                        //Get the entry in `json`
+                        var result = Object.values(json).filter(obj => {
+                            return obj.sku == src.parentNode.parentElement.id
+                        })[0]
+
+                        //Change price
+                        result.buy.metal = parseFloat(src.value)
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
                     break;
                 case "Sell":
                     child_of_element.querySelector(".keys").value = parseInt(Object.values(json)[eq_json_item].sell.keys)
+                    child_of_element.querySelector(".keys").addEventListener('change', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+
+                        //Get the entry in `json`
+                        var result = Object.values(json).filter(obj => {
+                            return obj.sku == src.parentNode.parentElement.id
+                        })[0]
+
+                        //Change price
+                        result.sell.keys = parseInt(src.value)
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
+
                     child_of_element.querySelector(".metal").value = parseFloat(Object.values(json)[eq_json_item].sell.metal).toFixed(2)
+                    child_of_element.querySelector(".metal").addEventListener('change', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+
+                        //Get the entry in `json`
+                        var result = Object.values(json).filter(obj => {
+                            return obj.sku == src.parentNode.parentElement.id
+                        })[0]
+
+                        //Change price
+                        result.sell.metal = parseFloat(src.value)
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
                     break;
                 case "Buttons":
                     //Backpack.tf
