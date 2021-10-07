@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
-    <title>Cock</title>
+    <title>TF2 autobot-gui</title>
+    <meta name="description" content="A Web-based GUI editor for tf2 AutoBot's pricelists">
 </head>
 
 <body onload="file_changed()">
@@ -24,7 +25,7 @@
     <div id="topbar">
         <ul>
             <li>
-                <div> pricelist.json: </div>
+                <div>Pricelist:</div>
             </li>
             <li>
                 <hr class="vh">
@@ -33,7 +34,7 @@
                 <input id="pricelist-upload" type="file" accept=".json" oninput="file_changed()">
             </li>
             <li>
-                <button id="save-pricelist" type="button" onclick="export_pricelist()">
+                <button id="save-pricelist" type="button" onclick="export_pricelist()" style="margin-top: 25%;">
                     Save
                 </button>
             </li>
@@ -41,23 +42,23 @@
     </div>
     <div id="listings">
         <li id="example-listing" class="listing" style="display: none;">
-            <h3 class="Title" title="Title">Example Title</h3>
-            <h6 class="Sku" title="Sku">666 66</h6>
-            <p class="Desc">Hi!</p>
-            <p class="Group">Crap</p>
-            <div class="Buy" title="Buy">
-                <input class="keys" type="number" step="1" min=0>
-                <input class="metal" type="number" step="0.05" min=0>
-            </div>
-            <div class="Sell" title="Sell">
-                <input class="keys" type="number" step="1" min=0>
-                <input class="metal" type="number" step="0.05" min=0>
-            </div>
-            <div class="Buttons">
-                <button class="delete" title="delete">
-                    <img src="public/trash-can.png">
-                </button>
-            </div>
+            <h4 class="Title" title="Title">Example Title</h3>
+                <h6 class="Sku" title="Sku">666 66</h6>
+                <p class="Desc">Hi!</p>
+                <p class="Group">Crap</p>
+                <div class="Buy" title="Buy">
+                    <input class="keys" type="number" step="1" min=0>
+                    <input class=" metal" type="number" step="0.05" min=0>
+                </div>
+                <div class="Sell" title="Sell">
+                    <input class="keys" type="number" step="1" min=0>
+                    <input class="metal" type="number" step="0.05" min=0>
+                </div>
+                <div class="Buttons">
+                    <button class="delete" title="delete">
+                        <img src="public/trash-can.png" alt="Delete">
+                    </button>
+                </div>
         </li>
         <ul id="listings-list" style="padding: 0 0;">
             <!-- LISTING DOWN 'ERE -->
