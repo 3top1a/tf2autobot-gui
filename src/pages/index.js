@@ -163,6 +163,25 @@ function applyJsonToPage(out) {
                         applyJsonToPage()
                     });
 
+
+                    //Switch
+                    switch_node = null
+                    child_of_element.childNodes.forEach(_node => {
+                        if (_node.className == "switch")
+                            switch_node = _node
+                    })
+                    if (switch_node == null) break;
+
+                    switch_node.addEventListener('click', (event) => {
+                        //Get the event's source
+                        var src = event.target || event.srcElement;
+
+                        //Get the entry in `json`
+                        json[src.parentNode.parentNode.parentNode.id].enabled = !json[src.parentNode.parentNode.parentNode.id].enabled
+
+                        //Redraw
+                        applyJsonToPage()
+                    });
                     break;
                 case "Group":
                     var html = "<input autocomplete=off type=\"text\" list=\"groups\">"
@@ -201,7 +220,7 @@ function export_pricelist() {
 
 
     var link = document.createElement("a");
-    link.download = "pricelist.js";
+    link.download = "pricelist.json";
     link.href = url;
     document.body.appendChild(link);
     link.click();
