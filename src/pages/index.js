@@ -135,34 +135,57 @@ function applyJsonToPage(out) {
                     });
                     break;
                 case "Buttons":
-                    //Backpack.tf
-                    // TODO Backpack.tf link
-                    //<img src="images/bptf_icon.webp" style="width: 24px; height: 24px;">
-
-                    //Trash
-                    //Delete the current item
-                    //Icons made by Freepik from www.flaticon.com
-
-                    //Stupid for loop because there's no `filter`
-                    trash_node = null
                     child_of_element.childNodes.forEach(_node => {
-                        if (_node.className == "delete")
-                            trash_node = _node
+                        //Trash
+                        //Delete the current item
+                        //Icons made by Freepik from www.flaticon.com
+                        if (_node.title == "Delete") {
+                            //Trash
+                            //Delete the current item
+                            //Icon made by Freepik from www.flaticon.com
+                            _node.addEventListener('click', (event) => {
+                                //Get the event's source
+                                var src = event.target || event.srcElement;
+
+                                //Get the entry in `json`
+                                delete json[src.parentNode.parentNode.parentNode.id]
+
+                                //Redraw
+                                applyJsonToPage()
+                            });
+                        }
+
+                        //Switch
+                        //Icons made by bqlqn from www.flaticon.com
+                        if (_node.title == "Enable/Disable") {
+                            _node.addEventListener('click', (event) => {
+                                //Get the event's source
+                                var src = event.target || event.srcElement;
+
+                                //Get the entry in `json`
+                                json[src.parentNode.parentNode.parentNode.id].enabled = !json[src.parentNode.parentNode.parentNode.id].enabled
+
+                                //Redraw
+                                applyJsonToPage()
+                            });
+                        }
+
+                        //Prices.tf
+                        //Icons made by Freepik from www.flaticon.com
+                        if (_node.title == "Price.tf") {
+                            _node.addEventListener('click', (event) => {
+                                //Get the event's source
+                                var src = event.target || event.srcElement;
+
+                                //Open in new tab
+                                open("https://www.prices.tf/items/" + src.parentNode.parentNode.parentNode.id)
+
+                                //Redraw
+                                applyJsonToPage()
+                            });
+                        }
+
                     })
-                    if (trash_node == null) break;
-
-
-                    trash_node.addEventListener('click', (event) => {
-                        //Get the event's source
-                        var src = event.target || event.srcElement;
-
-                        //Get the entry in `json`
-                        delete json[src.parentNode.parentNode.parentNode.id]
-
-                        //Redraw
-                        applyJsonToPage()
-                    });
-
                     break;
                 case "Group":
                     var html = "<input autocomplete=off type=\"text\" list=\"groups\">"
