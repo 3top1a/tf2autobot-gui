@@ -224,7 +224,7 @@ function export_pricelist() {
 
 
     var link = document.createElement("a");
-    link.download = "pricelist.js";
+    link.download = "pricelist.json";
     link.href = url;
     document.body.appendChild(link);
     link.click();
